@@ -7,15 +7,22 @@ class Game():
     def __init__(self):
         self.window = Tk()
         self.window.title("15 Game")
-        # self.window.rowconfigure(0, weight=1)
-        # self.window.columnconfigure(0, weight=1)
+        self.window.rowconfigure(0, weight=1)
+        self.window.columnconfigure(0, weight=1)
 
         self.frame = Frame(self.window)
         self.frame.grid(column=0, row=0, sticky="NEWS")
+        self.frame.rowconfigure(0, weight=1)
+
+        for i in range(0, 5):
+            self.frame.rowconfigure(i, weight=1)
+            for j in range(0, 4):
+                self.frame.columnconfigure(j, weight=1)
+
         self.btnNew = Button(self.frame, text="New", command=self.new_game)
-        self.btnNew.grid(row=0, column=0, columnspan=2, sticky="")
+        self.btnNew.grid(row=0, column=0, columnspan=2)
         self.btnExit = Button(self.frame, text="Exit", command=self.window.destroy)
-        self.btnExit.grid(row=0, column=2, columnspan=2, sticky="")
+        self.btnExit.grid(row=0, column=2, columnspan=2)
 
         self.new_game()
 
@@ -32,9 +39,8 @@ class Game():
                 else:
                     self.btnGame = Button(self.frame, text=str(self.numbers[pos]))
                     self.btnGame.bind("<Button-1>", self._change_state(self.numbers, i - 1, j))
-                    self.btnGame.grid(row=i, column=j, sticky="WE")
+                    self.btnGame.grid(row=i, column=j, sticky="NEWS")
 
-        self.frame.pack()
         self.check_win()
 
     def change_state(self, numbers, x, y):
@@ -74,7 +80,7 @@ class Game():
         self.new_game()
 
     def new_game(self):
-        self.numbers = [x for x in range (1,16)]
+        self.numbers = [x for x in range(1, 16)]
         self.numbers.append("")
         random.shuffle(self.numbers)
 
